@@ -226,31 +226,82 @@ public class SearchByBarcode extends ActionBarActivity {
 			    			tvNumUnitsData.setVisibility(View.VISIBLE);
 			    			
 			    			Log.d("TextView", uniqID.getPreporate().getName());
-			    			//Log.d("TextView", uniqID.getActiveSubs().getName());
-			    			//Log.d("TextView", uniqID.getPrepMaker().getName());
-			    			//Log.d("TextView", uniqID.getAsMaker().getName());
-			    			//Log.d("TextView", uniqID.getImporter().getName());
-			    			//Log.d("TextView", uniqID.getCertImporter().getCertNum());
-			    			//Log.d("TextView", uniqID.getCertImporter().getNationalRecNum());
-			    			//Log.d("TextView", uniqID.getContainer().getSize() + " " 
-			    			//		+ uniqID.getContainerVolume().getName() + " " 
-			    			//		+ uniqID.getContainerType().getName());
-			    			//Log.d("TextView", uniqID.getPgResult().getNumUnits().toString());
 			    			
-			    			if (uniqID.getPrepGroupID()!=0){tvPgNumData.setText(String.valueOf(uniqID.getPrepGroupID()));}
-			    			if (uniqID.getCosigment().getId()!=null){tvConsigNumData.setText(uniqID.getCosigment().getId().toString());}
-			    			if (uniqID.getCosigment().getExporterNumber()!=null){tvExportNumData.setText(uniqID.getCosigment().getExporterNumber());}
-			    			if (uniqID.getPreporate().getName()!=null){tvPrepNameData.setText(uniqID.getPreporate().getName());}
-			    			if (uniqID.getActiveSubs().getName()!=null){tvActiveSubsData.setText(uniqID.getActiveSubs().getName());}
-			    			if (uniqID.getPrepMaker().getName()!=null){tvMakerPrepData.setText(uniqID.getPrepMaker().getName());}
-			    			if (uniqID.getAsMaker().getName()!=null){tvMakerASdata.setText(uniqID.getAsMaker().getName());}
-			    			if (uniqID.getImporter().getName()!=null){tvImporterData.setText(uniqID.getImporter().getName());}
-			    			if (uniqID.getCertImporter().getCertNum()!=null){tvCertData.setText(uniqID.getCertImporter().getCertNum());}
-			    			if (uniqID.getCertImporter().getNationalRecNum()!=null){tvNatRecData.setText(uniqID.getCertImporter().getNationalRecNum());}
-			    			if (uniqID.getContainer().getSize()!=0){tvContainerData.setText(uniqID.getContainer().getSize() + " " 
-			    					+ uniqID.getContainerVolume().getName() + " " 
-			    					+ uniqID.getContainerType().getName());}
-			    			if (uniqID.getPgResult().getNumUnits()!=null){tvNumUnitsData.setText(uniqID.getPgResult().getNumUnits().toString());}
+			    			try {
+			    				if (uniqID.getPrepGroupID()!=0){tvPgNumData.setText(String.valueOf(uniqID.getPrepGroupID()));}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getCosigment().getId()!=null){tvConsigNumData.setText(uniqID.getCosigment().getId().toString());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getCosigment().getExporterNumber()!=null){tvExportNumData.setText(uniqID.getCosigment().getExporterNumber());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getPreporate().getName()!=null){tvPrepNameData.setText(uniqID.getPreporate().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getActiveSubs().getName()!=null){tvActiveSubsData.setText(uniqID.getActiveSubs().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getPrepMaker().getName()!=null){tvMakerPrepData.setText(uniqID.getPrepMaker().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getAsMaker().getName()!=null){tvMakerASdata.setText(uniqID.getAsMaker().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getImporter().getName()!=null){tvImporterData.setText(uniqID.getImporter().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getCertImporter().getCertNum()!=null){tvCertData.setText(uniqID.getCertImporter().getCertNum());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getCertImporter().getNationalRecNum()!=null){tvNatRecData.setText(uniqID.getCertImporter().getNationalRecNum());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getContainer().getSize()!=0){tvContainerData.setText(uniqID.getContainer().getSize() + " " 
+			    						+ uniqID.getContainerVolume().getName() + " " 
+			    						+ uniqID.getContainerType().getName());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			try {
+			    				if (uniqID.getPgResult().getNumUnits()!=null){tvNumUnitsData.setText(uniqID.getPgResult().getNumUnits().toString());}
+			    			} catch (Exception e) {
+			    				// TODO: handle exception
+			    				Log.d("RECIVE-DATA", e.toString());
+			    			}
+			    			
 			    			tvResultData.setText("OK! (200)");
 		    	    	}
 		    	    	else {
@@ -260,57 +311,15 @@ public class SearchByBarcode extends ActionBarActivity {
 	    	    	catch (Exception e){
 	    	    		Log.d("TextViewException", "barcodeSearchGetBarcode NULLLL");
 	    	    	}
-	    	    	/*IASKuniqID uniqID = barcodeSearch.getUniqID();
-	    	    	
-	    			Log.d("TextView", "CHECKING...");
-	    			*/
-	    			//Log.d("TextView", String.valueOf(uniqID.getPrepGroupID()));
-	    			//Log.d("TextView", uniqID.getCosigment().getId().toString());
-	    			/*
-	    			 * uniqID имеет null на данном этапе!!!!
-	    			 */
-	    			/*try {
-	    				Log.d("TextView", uniqID.getCosigment().getExporterNumber());
-	    			}
-	    			catch (Exception e){
-	    				Log.d("TextView", "We have a problem!");
-	    				if (uniqID!=null){
-	    					Log.d("CHECK", "not null");
-	    				}
-	    				else {
-	    					Log.d("CHECK", "null");
-	    				}
-	    			
-	    				//Log.d("TextView", e.getLocalizedMessage());
-	    			}
-	    			Log.d("TextView", uniqID.getPreporate().getName());
-	    			Log.d("TextView", uniqID.getActiveSubs().getName());
-	    			Log.d("TextView", uniqID.getPrepMaker().getName());
-	    			Log.d("TextView", uniqID.getAsMaker().getName());
-	    			Log.d("TextView", uniqID.getImporter().getName());
-	    			Log.d("TextView", uniqID.getCertImporter().getCertNum());
-	    			Log.d("TextView", uniqID.getCertImporter().getNationalRecNum());
-	    			Log.d("TextView", uniqID.getContainer().getSize() + " " 
-	    					+ uniqID.getContainerVolume().getName() + " " 
-	    					+ uniqID.getContainerType().getName());
-	    			Log.d("TextView", uniqID.getPgResult().getNumUnits().toString());
-	    			
-	    			
-	    			//tvPgNumData.setText(String.valueOf(uniqID.getPrepGroupID()));
-	    			//tvConsigNumData.setText(uniqID.getCosigment().getId().toString());
-	    			tvExportNumData.setText(uniqID.getCosigment().getExporterNumber());
-	    			tvPrepNameData.setText(uniqID.getPreporate().getName());
-	    			tvActiveSubsData.setText(uniqID.getActiveSubs().getName());
-	    			tvMakerPrepData.setText(uniqID.getPrepMaker().getName());
-	    			tvMakerASdata.setText(uniqID.getAsMaker().getName());
-	    			tvImporterData.setText(uniqID.getImporter().getName());
-	    			tvCertData.setText(uniqID.getCertImporter().getCertNum());
-	    			tvNatRecData.setText(uniqID.getCertImporter().getNationalRecNum());
-	    			tvContainerData.setText(uniqID.getContainer().getSize() + " " 
-	    					+ uniqID.getContainerVolume().getName() + " " 
-	    					+ uniqID.getContainerType().getName());
-	    			tvNumUnitsData.setText(uniqID.getPgResult().getNumUnits().toString());*/
-	    			
+	    	    		    			
+	    	    }
+	    	    else {
+	    	    	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+	    	    	dialog.setTitle("ERROR");
+	    	    	dialog.setCancelable(true);
+	    	    	dialog.setMessage("No data!");
+	    	    	dialog.show();
+	    	    	tvResultData.setText("Error! (404)");
 	    	    }
 	    	    
 		}

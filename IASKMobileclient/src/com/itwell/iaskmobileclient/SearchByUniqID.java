@@ -35,6 +35,9 @@ import com.google.gson.stream.JsonReader;
 
 
 
+
+
+
 //import aaaJSONtest1.TryToTestDBclass;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -206,6 +209,7 @@ public class SearchByUniqID extends ActionBarActivity {
 		userName = sp.getString("userName", userName);
 		userPassword = sp.getString("userPassword", userPassword);
 		hostAddr = proto + slash + host + ":8080";
+		IASKuniqID uniqID = new IASKuniqID();
 		final TextView tvResultData = (TextView) findViewById(R.id.tvResultData);
 		final TextView tvPgNum = (TextView) findViewById(R.id.tvPgNum);
 		final TextView tvPgNumData = (TextView) findViewById(R.id.tvPgNumData);
@@ -257,10 +261,133 @@ public class SearchByUniqID extends ActionBarActivity {
 		tvNumUnits.setVisibility(View.INVISIBLE);
 		tvNumUnitsData.setVisibility(View.INVISIBLE);
 
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+				new UsernamePasswordCredentials(userName, userPassword));
 		
+		Log.d("uniqID", "uniqID.setHostAddr(hostAddr)");
+		uniqID.setHostAddr(hostAddr);
+		Log.d("uniqID", "uniqID.setHttpClient(barcodeSearch.getHttpClient())");
+		uniqID.setHttpClient(httpClient);
+		Log.d("uniqID", "uniqID.setPrepGroupID(Integer.valueOf(barcodeSearch.getBarcode().getPreporateGroupID().toString()))");
+		uniqID.setPrepGroupID(urlID);
+		Log.d("uniqID", "getAllData");
+		uniqID.getAllData();
+		Log.d("uniqID", "getAllData - completed");
+		if ((uniqID.resultOK())&&(uniqID.getPgResult()!=null)){
+			tvPgNum.setVisibility(View.VISIBLE);
+			tvPgNumData.setVisibility(View.VISIBLE);
+			tvConsigNum.setVisibility(View.VISIBLE);
+			tvConsigNumData.setVisibility(View.VISIBLE);
+			tvExporterNum.setVisibility(View.VISIBLE);
+			tvExportNumData.setVisibility(View.VISIBLE);
+			tvPrepName.setVisibility(View.VISIBLE);
+			tvPrepNameData.setVisibility(View.VISIBLE);
+			tvActiveSubs.setVisibility(View.VISIBLE);
+			tvActiveSubsData.setVisibility(View.VISIBLE);
+			tvMakerPrep.setVisibility(View.VISIBLE);
+			tvMakerPrepData.setVisibility(View.VISIBLE);
+			tvMakerAS.setVisibility(View.VISIBLE);
+			tvMakerASdata.setVisibility(View.VISIBLE);
+			tvImporter.setVisibility(View.VISIBLE);
+			tvImporterData.setVisibility(View.VISIBLE);
+			tvCertNum.setVisibility(View.VISIBLE);
+			tvCertData.setVisibility(View.VISIBLE);
+			tvNationRec.setVisibility(View.VISIBLE);
+			tvNatRecData.setVisibility(View.VISIBLE);
+			tvContainer.setVisibility(View.VISIBLE);
+			tvContainerData.setVisibility(View.VISIBLE);
+			tvNumUnits.setVisibility(View.VISIBLE);
+			tvNumUnitsData.setVisibility(View.VISIBLE);
+			Log.d("TextView", uniqID.getPreporate().getName());
+			
+			try {
+				if (uniqID.getPrepGroupID()!=0){tvPgNumData.setText(String.valueOf(uniqID.getPrepGroupID()));}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getCosigment().getId()!=null){tvConsigNumData.setText(uniqID.getCosigment().getId().toString());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getCosigment().getExporterNumber()!=null){tvExportNumData.setText(uniqID.getCosigment().getExporterNumber());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getPreporate().getName()!=null){tvPrepNameData.setText(uniqID.getPreporate().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getActiveSubs().getName()!=null){tvActiveSubsData.setText(uniqID.getActiveSubs().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getPrepMaker().getName()!=null){tvMakerPrepData.setText(uniqID.getPrepMaker().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getAsMaker().getName()!=null){tvMakerASdata.setText(uniqID.getAsMaker().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getImporter().getName()!=null){tvImporterData.setText(uniqID.getImporter().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getCertImporter().getCertNum()!=null){tvCertData.setText(uniqID.getCertImporter().getCertNum());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getCertImporter().getNationalRecNum()!=null){tvNatRecData.setText(uniqID.getCertImporter().getNationalRecNum());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getContainer().getSize()!=0){tvContainerData.setText(uniqID.getContainer().getSize() + " " 
+						+ uniqID.getContainerVolume().getName() + " " 
+						+ uniqID.getContainerType().getName());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			try {
+				if (uniqID.getPgResult().getNumUnits()!=null){tvNumUnitsData.setText(uniqID.getPgResult().getNumUnits().toString());}
+			} catch (Exception e) {
+				// TODO: handle exception
+				Log.d("RECIVE-DATA", e.toString());
+			}
+			
+			tvResultData.setText("OK! (200)");
+		}
+		else {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+	    	dialog.setTitle("ERROR");
+	    	dialog.setCancelable(true);
+	    	dialog.setMessage("No data!");
+	    	dialog.show();
+	    	tvResultData.setText("Error! (404)");
+	    }
 		
-		//String nonSecureURL = "http://192.168.27.7:8080/TryToTestDBchange-portlet/api/jsonws/trytoaddsomefilelds/get-all-tryto-addsomefilelds";
-		//String SecureURL = "http://192.168.27.7:8080/TryToTestDBchange-portlet/api/secure/jsonws/trytoaddsomefilelds/get-all-tryto-addsomefilelds";
+		/*
 		IASKpreporateGroup pgResult = null;
 		IASKpreporate preporate = null;
 		IASKactiveSubstance activeSubs = null;
@@ -277,6 +404,9 @@ public class SearchByUniqID extends ActionBarActivity {
 		//tvResultData.setText("httpClient");
 		httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
 				new UsernamePasswordCredentials(userName, userPassword));
+		
+		///---------------------------
+		
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		pgResult = getPGdata(tvResultData, httpClient, urlID);
 		
@@ -335,20 +465,6 @@ public class SearchByUniqID extends ActionBarActivity {
 	    	tvNumUnitsData.setText(pgResult.getNumUnits().toString());
 	    	tvResultData.setText("OK! (200)");
 	    	//
-	    	/*dialog.setCancelable(true);
-	    	dialog.setMessage(preporate.getActiveSubstanceID() + " : " 
-	    	+ preporate.getName() + " : " + activeSubs.getName() + " : "
-	    	+ pgResult.getContainerID() + " : " 
-	    	+ container.getMaterialID()  + " : "  + contType.getName() + 
-	    	" : "  + contVolume.getName() + 
-	    	" : prepMaker "  + prepMaker.getName() + 
-	    	" : asMaker "  + asMaker.getName() + 
-	    	" : importer "  + importer.getName() + 
-	    	" : importer cert "  + certImport.getCertNum() +
-	    	" : cert date "  + certImport.getCertRegDate().toString() +
-	    	"---FIN"
-	    	);
-	    	dialog.show();*/
 	    	
 	    }
 	    else {
@@ -358,7 +474,7 @@ public class SearchByUniqID extends ActionBarActivity {
 	    	dialog.show();
 	    }
 	    
-		
+		*/
 	}
 	
 	public static IASKpreporateGroup readFieldPG(JsonReader reader) throws IOException {
