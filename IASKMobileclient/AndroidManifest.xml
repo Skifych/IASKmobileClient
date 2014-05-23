@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.itwell.iaskmobileclient"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.itwell.iaskmobileclient.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.itwell.iaskmobileclient.ScanBarcode"
+            android:label="@string/title_activity_scan_barcode" >
+        </activity>
+        <activity
+            android:name="com.itwell.iaskmobileclient.SearchByUniqID"
+            android:label="@string/title_activity_search_by_uniq_id" >
+        </activity>
+        <activity
+            android:name="com.itwell.iaskmobileclient.SearchByBarcode"
+            android:label="@string/title_activity_search_by_barcode" >
+        </activity>
+        <activity
+            android:name="com.itwell.iaskmobileclient.IASKmobileSettings"
+            android:label="@string/action_settings" >
+        </activity>
+        
+    </application>
+
+</manifest>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:selectable="true">
+    <ListPreference 
+        android:title="@string/protoListTitle"
+        android:entries="@array/protoList"
+        android:dependency="protoList"
+        android:key="protoList"
+        android:dialogTitle="@string/protoListTitle"
+        android:entryValues="@array/protoList"
+        android:defaultValue="@string/protoListDefault"
+        
+        />
+    <EditTextPreference 
+        android:dialogTitle="@string/hostAddrTitle" 
+        android:positiveButtonText="@string/butOk" 
+        android:negativeButtonText="@string/butCancel" 
+        android:summary="@string/hostAddrSummary" 
+        android:defaultValue="@string/hostAddr" 
+        android:key="hostAddr"
+        android:enabled="true" 
+        android:title="@string/hostAddrTitle"/>
+    
+    <EditTextPreference 
+        android:dialogTitle="@string/userNameTitle" 
+        android:positiveButtonText="@string/butOk" 
+        android:negativeButtonText="@string/butCancel" 
+        android:summary="@string/userNameSummary" 
+        android:defaultValue="@string/userName" 
+        android:key="userName"
+        android:enabled="true" 
+        android:title="@string/userNameTitle"/>
+    <EditTextPreference 
+        android:dialogTitle="@string/userPasswordTitle" 
+        android:positiveButtonText="@string/butOk" 
+        android:negativeButtonText="@string/butCancel" 
+        android:summary="@string/userPasswordSummary" 
+        android:defaultValue="@string/userPassword" 
+        android:key="userPassword"
+        android:enabled="true" 
+        android:password="true"
+        android:title="@string/userPasswordTitle"/>
+    
+
+</PreferenceScreen>

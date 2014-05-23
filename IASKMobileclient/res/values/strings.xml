@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IASKMobileclient</string>
+    <string name="hello_world">Выберите действие</string>
+    <string name="headSearchByUniqID">Введите уникальный номер:</string>
+    <string name="headSearchByBarcode">Введите штих-код:</string>
+    <string name="action_settings">Настройки</string>
+    <string name="txtScanBarcode">Сканировать</string>
+    <string name="txtSearchByUniqID">Поиск по уникальному коду</string>
+    <string name="txtSearchByBarcode">Поиск по штрих-коду</string>
+    <string name="title_activity_scan_barcode">Сканер</string>
+    <string name="title_activity_search_by_uniq_id">Уникальный номер</string>
+    <string name="title_activity_search_by_barcode">Штрих-код</string>
+    <string name="butSearch">Поиск</string>    
+    <string name="tvResultLabelCaption">Результат:</string>
+    <string name="hostAddrTitle">Адрес сервера</string>
+    <string name="hostAddrSummary">Введите адрес сервера</string>
+    <string name="hostAddr">127.0.0.1</string>
+    <string name="butOk">Да</string>    
+    <string name="butCancel">Нет</string>
+    <string name="protoListTitle">Протокол</string>
+    <string name="protoListDefault">http</string>
+    <string name="userNameTitle">Имя пользователя</string>
+    <string name="userNameSummary">Введите имя пользователя ИАСК</string>
+    <string name="userName">username@itwell.com.ua</string>
+    <string name="userPasswordTitle">Пароль пользователя</string>
+    <string name="userPasswordSummary">Введите пароль пользователя ИАСК</string>
+    <string name="userPassword">password</string>
+
+</resources>
+

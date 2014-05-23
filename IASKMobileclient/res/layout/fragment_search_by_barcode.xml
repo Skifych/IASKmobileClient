@@ -1,0 +1,252 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.itwell.iaskmobileclient.SearchByBarcode$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/headSearchByBarcode" />
+
+    <EditText
+        android:id="@+id/tfBarcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/butSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tfBarcode"
+        android:layout_alignRight="@+id/tfBarcode"
+        android:layout_below="@+id/tfBarcode"
+        android:onClick="onClickSearch"
+        android:text="@string/butSearch" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/butSearch"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/butSearch" >
+
+        <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/butSearch"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/butSearch"
+	        android:orientation="vertical" >
+	        
+            <TextView
+                android:id="@+id/tvResultLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvResultLabelCaption"
+                android:textStyle="bold" />
+		
+		    <TextView
+		        android:id="@+id/tvResultData"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvPgNum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="Номер группы"
+	        	android:textStyle="bold" />
+	
+	        <TextView
+	            android:id="@+id/tvPgNumData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvConsigNum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Номер партии" />
+	
+	        <TextView
+	            android:id="@+id/tvConsigNumData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvExporterNum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Номер экспортёра" />
+	
+	        <TextView
+	            android:id="@+id/tvExportNumData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvPrepName"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Торговое название" />
+	
+	        <TextView
+	            android:id="@+id/tvPrepNameData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvActiveSubs"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Действующее вещество" />
+	
+	        <TextView
+	            android:id="@+id/tvActiveSubsData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvMakerPrep"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Производитель препарата" />
+	
+	        <TextView
+	            android:id="@+id/tvMakerPrepData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvMakerAS"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Производитель ДВ" />
+	
+	        <TextView
+	            android:id="@+id/tvMakerASdata"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvImporter"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Держатель досье" />
+	
+	        <TextView
+	            android:id="@+id/tvImporterData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	        <TextView
+	            android:id="@+id/tvCertNum"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Сертификат" />
+	        
+	        <TextView
+	            android:id="@+id/tvCertData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	        
+	         <TextView
+	            android:id="@+id/tvNationRec"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Запись в национальном реестре" />
+	        
+	        <TextView
+	            android:id="@+id/tvNationRecData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	         <TextView
+	            android:id="@+id/tvContainer"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Тара" />
+	        
+	        <TextView
+	            android:id="@+id/tvContainerData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	         <TextView
+	            android:id="@+id/tvNumUnits"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:textStyle="bold"
+	            android:text="Количество" />
+	        
+	        <TextView
+	            android:id="@+id/tvNumUnitsData"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="invisible"
+	            android:text="-----" />
+	
+	    </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

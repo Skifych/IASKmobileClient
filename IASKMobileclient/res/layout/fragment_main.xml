@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.itwell.iaskmobileclient.MainActivity$PlaceholderFragment" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <Button
+        android:id="@+id/butScanBarcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:onClick="onClickScan"
+        android:text="@string/txtScanBarcode" />
+    
+    <Button
+        android:id="@+id/butSearchByUniqID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/butScanBarcode"
+        android:layout_alignRight="@+id/butScanBarcode"
+        android:layout_below="@+id/butScanBarcode"
+        android:layout_marginTop="20dp"
+        android:onClick="onClickSearchByUniqID"
+        android:text="@string/txtSearchByUniqID" />
+    
+    <Button
+        android:id="@+id/butSearchByBarcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/butSearchByUniqID"
+        android:layout_alignRight="@+id/butSearchByUniqID"
+        android:layout_below="@+id/butSearchByUniqID"
+        android:layout_marginTop="15dp"
+        android:onClick="onClickSearchByBarcode"
+        android:text="@string/txtSearchByBarcode" />
+
+</RelativeLayout>
