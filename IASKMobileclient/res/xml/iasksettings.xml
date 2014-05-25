@@ -39,6 +39,17 @@
         android:enabled="true" 
         android:password="true"
         android:title="@string/userPasswordTitle"/>
+     <EditTextPreference 
+        android:dialogTitle="@string/hostPortTitle" 
+        android:positiveButtonText="@string/butOk" 
+        android:negativeButtonText="@string/butCancel" 
+        android:summary="@string/hostPortSummary" 
+        android:defaultValue="@string/hostPort" 
+        android:key="hostPort"
+        android:enabled="true" 
+		android:inputType="number" 
+        android:title="@string/hostPortTitle"/>
+    
     
 
 </PreferenceScreen>

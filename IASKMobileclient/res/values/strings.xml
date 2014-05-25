@@ -17,6 +17,9 @@
     <string name="hostAddrTitle">Адрес сервера</string>
     <string name="hostAddrSummary">Введите адрес сервера</string>
     <string name="hostAddr">127.0.0.1</string>
+    <string name="hostPortTitle">Порт для подключения</string>
+    <string name="hostPortSummary">Введите порт для подключения к серверу</string>
+    <string name="hostPort">8080</string>
     <string name="butOk">Да</string>    
     <string name="butCancel">Нет</string>
     <string name="protoListTitle">Протокол</string>

@@ -20,9 +20,11 @@ import com.google.gson.stream.JsonReader;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.internal.widget.ActivityChooserModel.HistoricalRecord;
 import android.support.v4.app.Fragment;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -44,11 +46,12 @@ import android.content.SharedPreferences;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.stream.JsonReader;
+import com.itwell.iaskmobileclient.SearchByUniqID.DownloadDataTask;
 
 public class SearchByBarcode extends ActionBarActivity {
 	public static String proto = "http";
 	public static String host = "192.168.27.7";
-	public static int port = 8080;
+	public static String port = "8080";
 	public static String slash = "://";
 	public static String hostAddr = proto + slash + host + ":8080";
 	public static String getPGidURL = "/iaskdbport-portlet/api/secure/jsonws/iaskpreporategroup/get-ias-kpreporate-group-by-id/id/";
@@ -65,6 +68,34 @@ public class SearchByBarcode extends ActionBarActivity {
 	public static String userName = "username@itwell.com.ua";
 	public static String userPassword = "userPassword";
 	SharedPreferences sp;
+	
+	
+	EditText tfBarcode;
+	TextView tvResultData;
+	TextView tvPgNum;
+	TextView tvPgNumData;
+	TextView tvConsigNum;
+	TextView tvConsigNumData;
+	TextView tvExporterNum;
+	TextView tvExportNumData;
+	TextView tvPrepName;
+	TextView tvPrepNameData;
+	TextView tvActiveSubs;
+	TextView tvActiveSubsData;
+	TextView tvMakerPrep;
+	TextView tvMakerPrepData;
+	TextView tvMakerAS;
+	TextView tvMakerASdata;
+	TextView tvImporter;
+	TextView tvImporterData;
+	TextView tvCertNum;
+	TextView tvCertData;
+	TextView tvNationRec;
+	TextView tvNatRecData;
+	TextView tvContainer;
+	TextView tvContainerData;
+	TextView tvNumUnits;
+	TextView tvNumUnitsData;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,33 +159,35 @@ public class SearchByBarcode extends ActionBarActivity {
 		host = sp.getString("hostAddr", "127.0.0.1");
 		userName = sp.getString("userName", userName);
 		userPassword = sp.getString("userPassword", userPassword);
-		hostAddr = proto + slash + host + ":8080";
-		final EditText tfBarcode = (EditText) findViewById(R.id.tfBarcode);
-		final TextView tvResultData = (TextView) findViewById(R.id.tvResultData);
-		final TextView tvPgNum = (TextView) findViewById(R.id.tvPgNum);
-		final TextView tvPgNumData = (TextView) findViewById(R.id.tvPgNumData);
-		final TextView tvConsigNum = (TextView) findViewById(R.id.tvConsigNum);
-		final TextView tvConsigNumData = (TextView) findViewById(R.id.tvConsigNumData);
-		final TextView tvExporterNum = (TextView) findViewById(R.id.tvExporterNum);
-		final TextView tvExportNumData = (TextView) findViewById(R.id.tvExportNumData);
-		final TextView tvPrepName = (TextView) findViewById(R.id.tvPrepName);
-		final TextView tvPrepNameData = (TextView) findViewById(R.id.tvPrepNameData);
-		final TextView tvActiveSubs = (TextView) findViewById(R.id.tvActiveSubs);
-		final TextView tvActiveSubsData = (TextView) findViewById(R.id.tvActiveSubsData);
-		final TextView tvMakerPrep = (TextView) findViewById(R.id.tvMakerPrep);
-		final TextView tvMakerPrepData = (TextView) findViewById(R.id.tvMakerPrepData);
-		final TextView tvMakerAS = (TextView) findViewById(R.id.tvMakerAS);
-		final TextView tvMakerASdata = (TextView) findViewById(R.id.tvMakerASdata);
-		final TextView tvImporter = (TextView) findViewById(R.id.tvImporter);
-		final TextView tvImporterData = (TextView) findViewById(R.id.tvImporterData);
-		final TextView tvCertNum = (TextView) findViewById(R.id.tvCertNum);
-		final TextView tvCertData = (TextView) findViewById(R.id.tvCertData);
-		final TextView tvNationRec = (TextView) findViewById(R.id.tvNationRec);
-		final TextView tvNatRecData = (TextView) findViewById(R.id.tvNationRecData);
-		final TextView tvContainer = (TextView) findViewById(R.id.tvContainer);
-		final TextView tvContainerData = (TextView) findViewById(R.id.tvContainerData);
-		final TextView tvNumUnits = (TextView) findViewById(R.id.tvNumUnits);
-		final TextView tvNumUnitsData = (TextView) findViewById(R.id.tvNumUnitsData);
+		port = sp.getString("port", "8080");
+		//hostAddr = proto + slash + host + ":8080";
+		hostAddr = getHostAddr(proto, host, port);
+		tfBarcode = (EditText) findViewById(R.id.tfBarcode);
+		tvResultData = (TextView) findViewById(R.id.tvResultData);
+		tvPgNum = (TextView) findViewById(R.id.tvPgNum);
+		tvPgNumData = (TextView) findViewById(R.id.tvPgNumData);
+		tvConsigNum = (TextView) findViewById(R.id.tvConsigNum);
+		tvConsigNumData = (TextView) findViewById(R.id.tvConsigNumData);
+		tvExporterNum = (TextView) findViewById(R.id.tvExporterNum);
+		tvExportNumData = (TextView) findViewById(R.id.tvExportNumData);
+		tvPrepName = (TextView) findViewById(R.id.tvPrepName);
+		tvPrepNameData = (TextView) findViewById(R.id.tvPrepNameData);
+		tvActiveSubs = (TextView) findViewById(R.id.tvActiveSubs);
+		tvActiveSubsData = (TextView) findViewById(R.id.tvActiveSubsData);
+		tvMakerPrep = (TextView) findViewById(R.id.tvMakerPrep);
+		tvMakerPrepData = (TextView) findViewById(R.id.tvMakerPrepData);
+		tvMakerAS = (TextView) findViewById(R.id.tvMakerAS);
+		tvMakerASdata = (TextView) findViewById(R.id.tvMakerASdata);
+		tvImporter = (TextView) findViewById(R.id.tvImporter);
+		tvImporterData = (TextView) findViewById(R.id.tvImporterData);
+		tvCertNum = (TextView) findViewById(R.id.tvCertNum);
+		tvCertData = (TextView) findViewById(R.id.tvCertData);
+		tvNationRec = (TextView) findViewById(R.id.tvNationRec);
+		tvNatRecData = (TextView) findViewById(R.id.tvNationRecData);
+		tvContainer = (TextView) findViewById(R.id.tvContainer);
+		tvContainerData = (TextView) findViewById(R.id.tvContainerData);
+		tvNumUnits = (TextView) findViewById(R.id.tvNumUnits);
+		tvNumUnitsData = (TextView) findViewById(R.id.tvNumUnitsData);
 		
 		
 		tvPgNum.setVisibility(View.INVISIBLE);
@@ -182,145 +215,8 @@ public class SearchByBarcode extends ActionBarActivity {
 		tvNumUnits.setVisibility(View.INVISIBLE);
 		tvNumUnitsData.setVisibility(View.INVISIBLE);
 		if ((!tfBarcode.getText().toString().equals(""))&&(tfBarcode.getText().length() != 0)){
-	    	    barcodeSearch = getDataSearch(tfBarcode.getText().toString());
-	    	    if(barcodeSearch!=null){
-	    	    	
-	    	    	try {
-		    	    	if (barcodeSearch.getBarcode()!=null){
-		    	    		Log.d("TextView", String.valueOf(barcodeSearch.getBarcode().getBarcodeGroup()) + "start PG search");
-		    	    		//
-		    	    		IASKuniqID uniqID = new IASKuniqID();
-		    	    		Log.d("uniqID", "uniqID.setHostAddr(hostAddr)");
-		    	    		uniqID.setHostAddr(hostAddr);
-		    	    		Log.d("uniqID", "uniqID.setHttpClient(barcodeSearch.getHttpClient())");
-		    	    		uniqID.setHttpClient(barcodeSearch.getHttpClient());
-		    	    		Log.d("uniqID", "uniqID.setPrepGroupID(Integer.valueOf(barcodeSearch.getBarcode().getPreporateGroupID().toString()))");
-		    	    		uniqID.setPrepGroupID(Integer.valueOf(barcodeSearch.getBarcode().getPreporateGroupID().toString()));
-		    	    		Log.d("uniqID", "getAllData");
-		    	    		uniqID.getAllData();
-		    	    		Log.d("uniqID", "getAllData - completed");
-		    	    		IASKbarcode barcodeGroup = barcodeSearch.getBarcode();
-			    	    	tvPgNum.setVisibility(View.VISIBLE);
-			    			tvPgNumData.setVisibility(View.VISIBLE);
-			    			tvConsigNum.setVisibility(View.VISIBLE);
-			    			tvConsigNumData.setVisibility(View.VISIBLE);
-			    			tvExporterNum.setVisibility(View.VISIBLE);
-			    			tvExportNumData.setVisibility(View.VISIBLE);
-			    			tvPrepName.setVisibility(View.VISIBLE);
-			    			tvPrepNameData.setVisibility(View.VISIBLE);
-			    			tvActiveSubs.setVisibility(View.VISIBLE);
-			    			tvActiveSubsData.setVisibility(View.VISIBLE);
-			    			tvMakerPrep.setVisibility(View.VISIBLE);
-			    			tvMakerPrepData.setVisibility(View.VISIBLE);
-			    			tvMakerAS.setVisibility(View.VISIBLE);
-			    			tvMakerASdata.setVisibility(View.VISIBLE);
-			    			tvImporter.setVisibility(View.VISIBLE);
-			    			tvImporterData.setVisibility(View.VISIBLE);
-			    			tvCertNum.setVisibility(View.VISIBLE);
-			    			tvCertData.setVisibility(View.VISIBLE);
-			    			tvNationRec.setVisibility(View.VISIBLE);
-			    			tvNatRecData.setVisibility(View.VISIBLE);
-			    			tvContainer.setVisibility(View.VISIBLE);
-			    			tvContainerData.setVisibility(View.VISIBLE);
-			    			tvNumUnits.setVisibility(View.VISIBLE);
-			    			tvNumUnitsData.setVisibility(View.VISIBLE);
-			    			
-			    			Log.d("TextView", uniqID.getPreporate().getName());
-			    			
-			    			try {
-			    				if (uniqID.getPrepGroupID()!=0){tvPgNumData.setText(String.valueOf(uniqID.getPrepGroupID()));}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getCosigment().getId()!=null){tvConsigNumData.setText(uniqID.getCosigment().getId().toString());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getCosigment().getExporterNumber()!=null){tvExportNumData.setText(uniqID.getCosigment().getExporterNumber());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getPreporate().getName()!=null){tvPrepNameData.setText(uniqID.getPreporate().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getActiveSubs().getName()!=null){tvActiveSubsData.setText(uniqID.getActiveSubs().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getPrepMaker().getName()!=null){tvMakerPrepData.setText(uniqID.getPrepMaker().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getAsMaker().getName()!=null){tvMakerASdata.setText(uniqID.getAsMaker().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getImporter().getName()!=null){tvImporterData.setText(uniqID.getImporter().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getCertImporter().getCertNum()!=null){tvCertData.setText(uniqID.getCertImporter().getCertNum());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getCertImporter().getNationalRecNum()!=null){tvNatRecData.setText(uniqID.getCertImporter().getNationalRecNum());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getContainer().getSize()!=0){tvContainerData.setText(uniqID.getContainer().getSize() + " " 
-			    						+ uniqID.getContainerVolume().getName() + " " 
-			    						+ uniqID.getContainerType().getName());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			try {
-			    				if (uniqID.getPgResult().getNumUnits()!=null){tvNumUnitsData.setText(uniqID.getPgResult().getNumUnits().toString());}
-			    			} catch (Exception e) {
-			    				// TODO: handle exception
-			    				Log.d("RECIVE-DATA", e.toString());
-			    			}
-			    			
-			    			tvResultData.setText("OK! (200)");
-		    	    	}
-		    	    	else {
-		    	    		Log.d("TextView", "barcodeSearchGetBarcode NULLLL");
-		    	    	}
-	    	    	}
-	    	    	catch (Exception e){
-	    	    		Log.d("TextViewException", "barcodeSearchGetBarcode NULLLL");
-	    	    	}
-	    	    		    			
-	    	    }
-	    	    else {
-	    	    	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-	    	    	dialog.setTitle("ERROR");
-	    	    	dialog.setCancelable(true);
-	    	    	dialog.setMessage("No data!");
-	    	    	dialog.show();
-	    	    	tvResultData.setText("Error! (404)");
-	    	    }
+			DownloadDataTask ddt = new DownloadDataTask();
+			ddt.execute();
 	    	    
 		}
 		else {
@@ -344,24 +240,7 @@ public class SearchByBarcode extends ActionBarActivity {
 		String nonSecureURL = secureURLpg;
 		barcodeGroup = getBGdata(httpClient, barcode);
 		if ((barcodeGroup!=null)&&(barcodeGroup.getPreporateGroupID()!=null)){
-			/*IASKuniqID uniqID = new IASKuniqID();
-			uniqID.setHostAddr(hostAddr);
-			uniqID.setHttpClient(httpClient);
-			Log.d("BARCODE", barcodeGroup.getPreporateGroupID().toString());
-			uniqID.setPrepGroupID(Integer.valueOf(barcodeGroup.getPreporateGroupID().toString()));
-			Log.d("BARCODE", "start getalldata");
-			uniqID.getAllData();
-			Log.d("BARCODE", "getalldata - OK!");
-			barcodeSearch.setUniqID(uniqID);
-			Log.d("BARCODE", "set barcodeSearch");
-			if (barcodeSearch.getUniqID()!=null){
-				Log.d("BARCODE", "get barcodeSearch not null");
-			}
-			else {
-				Log.d("BARCODE", "get barcodeSearch is null");
-			}
 			
-			result=barcodeSearch;*/
 			//result = new IASKbarcodeID();
 			Log.d("barcodeSearch", "result.setBarcode()");
 			result.setBarcode(barcodeGroup);
@@ -420,20 +299,23 @@ public class SearchByBarcode extends ActionBarActivity {
 		}
 
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
-	public static IASKbarcode getBGdata(DefaultHttpClient httpClient, String barcode) {
+	public static IASKbarcode getBGdata(DefaultHttpClient httpClient, String url) {
 		IASKbarcode result = null;
 		//IASKbarcode barcodeGroup =null;
-		String secureURLpg = hostAddr + getBarcodeURL + barcode;
-		String nonSecureURL = secureURLpg;
+		//String secureURLpg = hostAddr + getBarcodeURL + barcode;
+		Log.d("getBGdata", "set nonSecureURL url");
+		String nonSecureURL = url;
 		//tvResultData.setText(secureURLpg);
 		Log.d("GetBGData", nonSecureURL);
 		try {
+			Log.d("GetBGData", "httpGet");
 			URI uri;
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
+	        Log.d("GetBGData", "response");
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 	        Log.d("GetBGData", "HTTP response");
 			response = httpClient.execute(httpGet);
 			//System.out.println(response.getStatusLine().getStatusCode());
@@ -457,12 +339,10 @@ public class SearchByBarcode extends ActionBarActivity {
 					Log.d("GetBGData", "OK! " + jsonContent);
 		        	Reader stringReader = new StringReader(jsonContent);
 		        	JsonReader reader = new JsonReader(stringReader);
-		        	result =readFieldBG(reader);
-		        	barcodeSearch.setBarcode(result);
-		        	/*IASKuniqID uniqID = new IASKuniqID();
-		        	uniqID.setHostAddr(hostAddr);
-		        	uniqID.setHttpClient(httpClient);
-		        	barcodeSearch.setUniqID(uniqID);*/
+		        	Log.d("GetBGData", "result");
+		        	result = readFieldBG(reader);
+		        	Log.d("GetBGData", result.getPreporateGroupID().toString());
+		        	//barcodeSearch.setBarcode(result);
 				}
 	        	     
 	        }
@@ -474,6 +354,12 @@ public class SearchByBarcode extends ActionBarActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("HTTPCLIENT", e.getLocalizedMessage());
+		}
+		if (result!=null) {
+			Log.d("GetBGData", "RESULT not NULL");
+		}
+		else {
+			Log.d("GetBGData", "RESULT is NULL");
 		}
 		return result;
 	}
@@ -520,5 +406,197 @@ public class SearchByBarcode extends ActionBarActivity {
 		public void setPreporateGroupID(int preporateGroupID) {
 			this.preporateGroupID = preporateGroupID;
 		}*/
+	}
+	
+	private String getHostAddr(String proto, String host, String port){
+		String result;
+		//Pattern pattern = Pattern.compile(port);
+		if ((port.equals("80")|(port.equals("0"))|(port.equals("")))){
+			result = proto + slash + host;
+		}
+		else {
+			result = proto + slash + host + ":" + port;
+		}
+		return result;
+	}
+	
+	protected class DownloadDataTask  extends AsyncTask<Void, Void, Void>  {
+		IASKuniqID ddtUniqID = new IASKuniqID();
+		Integer urlID = 0;
+		IASKbarcodeID result = new IASKbarcodeID();
+		String barcode = tfBarcode.getText().toString();
+		IASKbarcode barcodeGroup = null;
+		String url = null;
+		//String hostAddrDDT = null;
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			tvResultData.setText("Getting data...");
+			Log.d("BARCODE", hostAddr);
+			barcodeSearch.setHostAddr(hostAddr);
+			Log.d("uniqID", "uniqID.setHostAddr(hostAddr)");
+			Log.d("uniqID", hostAddr);
+			ddtUniqID.setHostAddr(hostAddr);
+			EditText tfBarcode = (EditText) findViewById(R.id.tfBarcode);
+			String secureURLpg = hostAddr + getBarcodeURL + barcode;
+			String nonSecureURL = secureURLpg;
+			//hostAddrDDT = hostAddr;
+			
+			url = hostAddr + getBarcodeURL + barcode;
+		}
+		
+		protected void onProgressUpdate(Integer... progress) {
+	         setProgress(progress[0]);
+	     }
+
+	    protected void onPostExecute(Void result) {
+	    	 super.onPostExecute(result);
+	         //showDialog("Downloaded " + result + " bytes");
+	    	 if ((ddtUniqID.resultOK()==true)&&(ddtUniqID.getPgResult()!=null)){
+					tvPgNum.setVisibility(View.VISIBLE);
+					tvPgNumData.setVisibility(View.VISIBLE);
+					tvConsigNum.setVisibility(View.VISIBLE);
+					tvConsigNumData.setVisibility(View.VISIBLE);
+					tvExporterNum.setVisibility(View.VISIBLE);
+					tvExportNumData.setVisibility(View.VISIBLE);
+					tvPrepName.setVisibility(View.VISIBLE);
+					tvPrepNameData.setVisibility(View.VISIBLE);
+					tvActiveSubs.setVisibility(View.VISIBLE);
+					tvActiveSubsData.setVisibility(View.VISIBLE);
+					tvMakerPrep.setVisibility(View.VISIBLE);
+					tvMakerPrepData.setVisibility(View.VISIBLE);
+					tvMakerAS.setVisibility(View.VISIBLE);
+					tvMakerASdata.setVisibility(View.VISIBLE);
+					tvImporter.setVisibility(View.VISIBLE);
+					tvImporterData.setVisibility(View.VISIBLE);
+					tvCertNum.setVisibility(View.VISIBLE);
+					tvCertData.setVisibility(View.VISIBLE);
+					tvNationRec.setVisibility(View.VISIBLE);
+					tvNatRecData.setVisibility(View.VISIBLE);
+					tvContainer.setVisibility(View.VISIBLE);
+					tvContainerData.setVisibility(View.VISIBLE);
+					tvNumUnits.setVisibility(View.VISIBLE);
+					tvNumUnitsData.setVisibility(View.VISIBLE);
+					Log.d("TextView", ddtUniqID.getPreporate().getName());
+					
+					try {
+						if (ddtUniqID.getPrepGroupID()!=0){tvPgNumData.setText(String.valueOf(ddtUniqID.getPrepGroupID()));}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getCosigment().getId()!=null){tvConsigNumData.setText(ddtUniqID.getCosigment().getId().toString());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getCosigment().getExporterNumber()!=null){tvExportNumData.setText(ddtUniqID.getCosigment().getExporterNumber());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getPreporate().getName()!=null){tvPrepNameData.setText(ddtUniqID.getPreporate().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getActiveSubs().getName()!=null){tvActiveSubsData.setText(ddtUniqID.getActiveSubs().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getPrepMaker().getName()!=null){tvMakerPrepData.setText(ddtUniqID.getPrepMaker().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getAsMaker().getName()!=null){tvMakerASdata.setText(ddtUniqID.getAsMaker().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getImporter().getName()!=null){tvImporterData.setText(ddtUniqID.getImporter().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getCertImporter().getCertNum()!=null){tvCertData.setText(ddtUniqID.getCertImporter().getCertNum());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getCertImporter().getNationalRecNum()!=null){tvNatRecData.setText(ddtUniqID.getCertImporter().getNationalRecNum());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getContainer().getSize()!=0){tvContainerData.setText(ddtUniqID.getContainer().getSize() + " " 
+								+ ddtUniqID.getContainerVolume().getName() + " " 
+								+ ddtUniqID.getContainerType().getName());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					try {
+						if (ddtUniqID.getPgResult().getNumUnits()!=null){tvNumUnitsData.setText(ddtUniqID.getPgResult().getNumUnits().toString());}
+					} catch (Exception e) {
+						// TODO: handle exception
+						Log.d("RECIVE-DATA", e.toString());
+					}
+					
+					tvResultData.setText("OK! (200)");
+				}
+	    	 else {
+	 			tvResultData.setText("Error! (404)");
+	 	    }
+	    	 
+
+	     }
+
+		
+		@Override
+		protected Void doInBackground(Void... params) {			
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			//tvResultData.setText("httpClient");
+			httpClient.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+					new UsernamePasswordCredentials(userName, userPassword));
+			Log.d("barcodeGroup", "getBGdata(httpClient, url)");
+			Log.d("barcodeGroup", url);
+			barcodeGroup = getBGdata(httpClient, url);
+			if (barcodeGroup!=null){
+				Log.d("DownloadDataTask", "barcodeGroup not NULL");
+				if (barcodeGroup.getPreporateGroupID()!=null){
+					Log.d("DownloadDataTask", barcodeGroup.getPreporateGroupID().toString());
+					Log.d("uniqID", "uniqID.setHttpClient(barcodeSearch.getHttpClient())");
+    	    		ddtUniqID.setHttpClient(httpClient);
+    	    		Log.d("uniqID", "uniqID.setPrepGroupID(Integer.valueOf(barcodeGroup.getPreporateGroupID().toString()))");
+    	    		ddtUniqID.setPrepGroupID(Integer.valueOf(barcodeGroup.getPreporateGroupID().toString()));
+    	    		Log.d("uniqID", barcodeGroup.getPreporateGroupID().toString());
+    	    		
+    	    		Log.d("uniqID", "getAllData");
+    	    		ddtUniqID.getAllData();
+    	    		Log.d("uniqID", "getAllData - completed");
+				}
+				else {
+    	    		Log.d("barcodeSearch", "GetBarcode NULLLL");
+    	    	}
+			}
+			else {
+	    		Log.d("barcodeSearch", "GetBarcode NULLLL2");
+	    	}	
+			return null;
+		}
+		
 	}
 }

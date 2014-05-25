@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.StrictMode;
+import android.os.StrictMode.*;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -119,6 +120,12 @@ public class IASKuniqID {
 
 	// 
 	public boolean resultOK() {
+		if (isNormal==true){
+			Log.d("resultOk", "TRUE");
+		}
+		else {
+			Log.d("resultOk", "FALSE");
+		}
 		return isNormal;
 	}
 	
@@ -689,8 +696,10 @@ public class IASKuniqID {
 	        //tvResultData.setText("httpGet");
 	        HttpResponse response;
 	        //tvResultData.setText("responce");
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //Log.d("STRICT", "Try to strict :)");
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //Log.d("STRICT", "OK!");
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			//tvResultData.setText("execute");
@@ -760,8 +769,11 @@ public class IASKuniqID {
 	        //tvResultData.setText("httpGet");
 	        HttpResponse response;
 	        //tvResultData.setText("responce");
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        if (Build.VERSION.SDK_INT> Build.VERSION_CODES.FROYO) {
+	        	StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		        StrictMode.setThreadPolicy(policy);
+	        }
+	        
 		
 			response = httpClient.execute(httpGet);
 			//tvResultData.setText("execute");
@@ -805,8 +817,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -841,8 +853,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -877,8 +889,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -913,8 +925,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -949,8 +961,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -985,8 +997,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
@@ -1021,8 +1033,8 @@ public class IASKuniqID {
 	        InputStream data = null;
 	        HttpGet httpGet = new HttpGet(nonSecureURL);
 	        HttpResponse response;
-	        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	        StrictMode.setThreadPolicy(policy);
+	        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	        //StrictMode.setThreadPolicy(policy);
 		
 			response = httpClient.execute(httpGet);
 			System.out.println(response.getStatusLine().getStatusCode());
